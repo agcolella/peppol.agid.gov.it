@@ -1,3 +1,14 @@
+<!-- Campo di ricerca per la tabella AP/SMP -->
+<div class="form-group my-4">
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+        <svg class="icon icon-sm icon-primary"><use xlink:href="{{ site.baseurl }}/assets/bootstrap-italia/svg/sprite.svg#it-search"></use></svg>
+      </div>
+    </div>
+    <input type="text" id="searchApSmp" class="form-control" placeholder="Cerca soggetto, Peppol ID, ruolo..." onkeyup="filterApSmpTable()">
+  </div>
+</div>
 <div class="table-responsive">
     <table class="table table-sm table-striped">
         <caption>{{ site.data.t.last-update[page.lang] }}: {{ page.last_update }}</caption>
@@ -37,3 +48,23 @@
         </tbody>
     </table>
 </div>
+<script>
+function filterApSmpTable() {
+  var input = document.getElementById("searchApSmp");
+  var filter = input.value.toLowerCase();
+  // Seleziona la tabella dell'elenco AP/SMP
+  var table = document.querySelector("table");
+  if (!table) return;
+  
+  var trs = table.querySelectorAll("tbody tr");
+
+  trs.forEach(function(row) {
+    var text = row.textContent || row.innerText;
+    if (text.toLowerCase().indexOf(filter) > -1) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+}
+</script>
