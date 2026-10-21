@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Avvia Jekyll (Locale)",
+      "type": "shell",
+      "command": "/home/pi/.rbenv/versions/2.6.3/bin/bundle _2.4.22_ exec jekyll serve --config _config.yml,_config_dev.yml --watch --drafts",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    }
+  ]
+}
