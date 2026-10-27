@@ -10,7 +10,7 @@
   {%- endif -%}
 </head>
 
-<body>
+<body class="{% if page.ref == 'homepage' or page.url == '/it/' %}homepage{% else %}page-internal{% endif %}">
   {%- include skiplinks.html -%}
   {%- include header/header.html -%}
   <div id="main">{{ content }}</div>

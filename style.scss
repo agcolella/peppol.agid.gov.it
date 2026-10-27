@@ -355,3 +355,38 @@ article h1.title {
     }
   }
 }
+/* ==========================================================================
+   Fix distanziamento pagine interne per evitare la sovrapposizione dell'header
+   ========================================================================== */
+
+/* Aggiunge uno spazio superiore a tutte le pagine interne */
+body:not(.homepage) main,
+body:not(.home) main,
+main.container {
+  padding-top: 100px !important;
+}
+
+/* In alternativa, se le tue pagine usano contenitori standard */
+body:not(.home) .container.my-5,
+body:not(.homepage) .container.my-5 {
+  margin-top: 100px !important;
+}
+
+/* Garantisce che il carosello della Home Page rimanga adiacente all'header */
+.carousel-section {
+  margin-top: 0 !important;
+}
+
+/* ==========================================================================
+   Distanziamento pagine interne per evitare la sovrapposizione dell'header
+   ========================================================================== */
+
+/* Spazio superiore solo per le pagine interne (non homepage) */
+body.page-internal #main {
+  padding-top: 110px;
+}
+
+/* La homepage mantiene il carosello/hero adiacente alla testata */
+body.homepage #main {
+  padding-top: 0;
+}
