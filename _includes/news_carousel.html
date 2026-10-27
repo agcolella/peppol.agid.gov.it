@@ -1,0 +1,104 @@
+{% assign latest_news = site.categories.news | where: "lang", page.lang | limit: 5 %}
+
+<style>
+/* Animazione FadeInUp per testo */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.carousel-single-news .carousel-item.active .animated-text {
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Stili del carosello */
+.carousel-single-news .carousel-item {
+  height: 480px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Overlay scuro per garantire la leggibilità del testo sopra le immagini */
+.carousel-single-news .carousel-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* Font size personalizzati */
+.carousel-news-title {
+  font-size: 30px !important;
+  line-height: 1.2;
+}
+
+.carousel-news-subtitle {
+  font-size: 15px !important;
+  line-height: 1.5;
+}
+
+/* Controlli freccia */
+.carousel-single-news .carousel-control-prev,
+.carousel-single-news .carousel-control-next {
+  width: 5%;
+  opacity: 0.8;
+  z-index: 10;
+}
+</style>
+
+<!-- SEZIONE 1: Carosello con immagini e animazione 3s -->
+<section class="carousel-section mb-5">
+  <div id="singleNewsCarousel" class="carousel slide carousel-fade carousel-single-news" data-ride="carousel" data-interval="3000">
+    
+    <!-- Indicatori -->
+    <ol class="carousel-indicators" style="z-index: 10;">
+      {% for post in latest_news %}
+        <li data-target="#singleNewsCarousel" data-slide-to="{{ forloop.index0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+      {% endfor %}
+    </ol>
+
+    <!-- Slide del Carosello -->
+    <div class="carousel-inner">
+      {% for post in latest_news %}
+        {% assign bg_image = post.image | default: '/assets/images/default-hero.jpg' %}
+        
+        <div class="carousel-item {% if forloop.first %}active{% endif %}" style="background-image: url('{{ site.baseurl }}{{ bg_image }}');">
+          <div class="container h-100 style-container" style="position: relative; z-index: 2;">
+            <div class="row h-100 align-items-center justify-content-end">
+              <!-- Testo con animazione dal basso -->
+              <div class="col-12 col-md-8 col-lg-7 text-right animated-text text-white my-4">
+                <span class="badge badge-outline-white mb-2">{% include date.html date=post.date %}</span>
+                <h2 class="carousel-news-title font-weight-bold text-white mb-3">{{ post.title }}</h2>
+                <p class="carousel-news-subtitle text-white-50 mb-4">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                <a href="{{ site.baseurl }}{{ post.url }}" class="btn btn-light text-primary font-weight-bold">
+                  {{ site.data.t.read-more[page.lang] | default: "Leggi la news" }} &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Controlli Freccia -->
+    <a class="carousel-control-prev" href="#singleNewsCarousel" role="button" data-slide="prev">
+      <svg class="icon icon-lg icon-white"><use xlink:href="{{ site.baseurl }}/assets/bootstrap-italia/svg/sprite.svg#it-chevron-left"></use></svg>
+      <span class="sr-only">Precedente</span>
+    </a>
+    <a class="carousel-control-next" href="#singleNewsCarousel" role="button" data-slide="next">
+      <svg class="icon icon-lg icon-white"><use xlink:href="{{ site.baseurl }}/assets/bootstrap-italia/svg/sprite.svg#it-chevron-right"></use></svg>
+      <span class="sr-only">Successivo</span>
+    </a>
+
+  </div>
+</section>

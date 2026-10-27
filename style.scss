@@ -105,3 +105,253 @@
 .skiplinks a:focus {
   border: 2px solid #f90;
 }
+
+/* ==========================================================================
+   Personalizzazioni Header Overlay e Menu Monoriga AgID
+   ========================================================================== */
+
+.agid-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.25);
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+
+  &:hover,
+  &:focus-within {
+    background-color: #002b55 !important; /* Blu scuro AgID */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.agid-single-line-nav {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: flex-end;
+  white-space: nowrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  .nav-item {
+    margin: 0 4px;
+
+    .nav-link {
+      color: #ffffff !important;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 10px 14px !important;
+      border-radius: 4px;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: #ffffff !important;
+        text-decoration: none;
+      }
+    }
+  }
+
+  /* Nasconde sottomenu a discesa per mantenere un unico livello */
+  .dropdown-menu {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   Rimozione residui visivi e bordi del vecchio header Bootstrap Italia
+   ========================================================================== */
+
+/* Nasconde sfondi e bordi dei vecchi contenitori wrapper dell'header */
+.it-header-wrapper,
+.it-nav-wrapper,
+.it-header-center-wrapper,
+.it-header-navbar-wrapper {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Rimuove la riga di separazione/bordo inferiore ereditata dal tema */
+.it-header-center-wrapper,
+.it-header-navbar-wrapper {
+  border-bottom: none !important;
+}
+
+/* Azzera eventuali padding o margini residui del contenitore padre */
+.it-header-wrapper {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* ==========================================================================
+   Rimozione della barra di navigazione Breadcrumbs dalle pagine interne
+   ========================================================================== */
+
+.breadcrumb-container,
+.breadcrumb,
+nav[aria-label="breadcrumb"],
+nav[aria-label="briciole di pane"],
+.it-breadcrumb {
+  display: none !important;
+}
+/* ==========================================================================
+   Rimozione dei titoli di pagina H1 automatici dalle pagine interne
+   ========================================================================== */
+
+main.container > h1:first-child,
+main.container > .row:first-child h1,
+.page-header h1,
+article h1.title {
+  display: none !important;
+}
+/* ==========================================================================
+   Header Overlay e Regolazione Larghezza Menu Monoriga
+   ========================================================================== */
+
+.agid-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: background-color 0.35s ease-in-out, box-shadow 0.35s ease-in-out;
+
+  &:hover,
+  &:focus-within {
+    background-color: #002b55 !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  }
+}
+
+.agid-nav-container {
+  overflow-x: auto;
+  scrollbar-width: none; /* Nasconde scrollbar su Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Nasconde scrollbar su Chrome/Safari */
+  }
+}
+
+.agid-single-line-nav {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: flex-end;
+  white-space: nowrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  .nav-item {
+    margin: 0 1px;
+
+    .nav-link {
+      color: #ffffff !important;
+      font-weight: 600;
+      font-size: 13px !important; /* Font leggermente più compatto per far rientrare tutte le voci */
+      padding: 6px 10px !important; /* Padding ridotto */
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+
+      @media (min-width: 1200px) {
+        font-size: 14px !important;
+        padding: 8px 12px !important;
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff !important;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    display: none !important;
+  }
+}
+/* ==========================================================================
+   Fix Menu Hamburger Responsivo
+   ========================================================================== */
+
+.agid-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: background-color 0.35s ease-in-out, box-shadow 0.35s ease-in-out;
+
+  &:hover,
+  &:focus-within {
+    background-color: #002b55 !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* Gestione visibilità mobile (< 992px) */
+@media (max-width: 991.98px) {
+  .agid-nav-container {
+    display: none; /* Nasconde il menu di default su mobile */
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .agid-nav-container.show {
+    display: block !important; /* Mostra le voci al clic sull'hamburger */
+  }
+
+  .agid-single-line-nav {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+
+    .nav-item {
+      width: 100%;
+      margin: 4px 0;
+
+      .nav-link {
+        font-size: 15px !important;
+        padding: 10px 12px !important;
+        background-color: rgba(255, 255, 255, 0.08);
+      }
+    }
+  }
+}
+
+/* Vista Desktop (>= 992px) */
+@media (min-width: 992px) {
+  .agid-nav-container {
+    display: flex !important;
+  }
+
+  .agid-single-line-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-end;
+    align-items: center;
+
+    .nav-item {
+      margin: 0 2px;
+
+      .nav-link {
+        font-size: 13px !important;
+        padding: 6px 10px !important;
+
+        @media (min-width: 1200px) {
+          font-size: 14px !important;
+          padding: 8px 12px !important;
+        }
+      }
+    }
+  }
+}

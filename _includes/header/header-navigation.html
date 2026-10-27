@@ -1,123 +1,38 @@
-{% comment %}
-Le pagine che vengono incluse in questo menù sono un sottoinsieme di tutte le pagine del sito che:
-- hanno la stessa lingua della pagina corrente
-- hanno l'attributo "order" valorizzato
-- hanno l'attributo "child_of_ref" non valorizzato (è un sottomenu)
-{% endcomment %}
+{% assign all_menu_pages = site.pages | where: "lang", page.lang | where_exp: "page", "page.order != nil" | sort: "order" %}
 
-{% assign current_lang_menu_pages = site.pages | where: "lang", page.lang | where_exp: "page", "page.order != nil" | where_exp: "page", "page.child_of_ref == nil" | sort: "order" %}
-<div class="it-nav-wrapper">
-  <div class="it-header-center-wrapper theme-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <div class="it-header-center-content-wrapper">
-            <div class="it-brand-wrapper">
-              <a href="{{ site.baseurl }}/{{ page.lang }}/" aria-label="Header - {{ site.data.t.go-home[page.lang] }}" data-proofer-ignore>
-                <img class="icon d-block" src="{{ site.baseurl }}{{ site.data.t.logo_header }}" alt="{{ site.name }} logo">
-                <div class="it-brand-text">
-                  <h2 class="no_toc sr-only">{{ site.data.t.name[page.lang] }}</h2>
-                  <h3 class="no_toc d-none d-md-block">{{ site.data.t.description[page.lang] }}</h3>
-                </div>
-              </a>
-            </div>
-            <div class="it-right-zone">
-              {% comment %}
-              <div class="it-socials d-none d-md-flex">
-                <span>{{ site.data.t.follow-us[page.lang] }}</span>
-                <ul>
-                  {% for social-link in site.data.t.social-links[page.lang] %}
-                  <li class="list-inline-item">
-                    <a aria-label="{{ social-link[1].name }} - {{ site.data.t.external-link[page.lang] }}" title="{{ site.data.t.external-link[page.lang] }}" rel="noreferrer" href="{{ social-link[1].url }}">
-                      <svg class="icon">
-                        <use
-                          xlink:href="{{ site.baseurl }}/assets/bootstrap-italia/svg/sprite.svg#it-{{ social-link[1].name }}">
-                        </use>
-                      </svg>
-                    </a>
-                  </li>
-                  {% endfor %}
-                </ul>
-              </div>
-              <!-- Search button -->
-              <div class="it-search-wrapper">
-                <span class="d-none d-md-block">Cerca</span>
-                <a class="search-link rounded-icon" href="#" aria-label="Cerca">
-                  <svg class="icon">
-                    <use xlink:href="{{ site.baseurl }}/assets/bootstrap-italia/svg/sprite.svg#it-search"></use>
-                  </svg>
+<div class="agid-header-overlay py-2">
+  <div class="container-fluid px-3 px-lg-4">
+    <div class="d-flex align-items-center justify-content-between flex-wrap">
+      
+      <!-- Logo / Brand -->
+      <div class="it-brand-wrapper flex-shrink-0">
+        <a href="{{ site.baseurl }}/{{ page.lang }}/" class="d-flex align-items-center text-white text-decoration-none" aria-label="Header - {{ site.data.t.go-home[page.lang] }}" data-proofer-ignore>
+          <img class="icon d-block" src="{{ site.baseurl }}{{ site.data.t.logo_header }}" alt="{{ site.name }} logo" style="height: 36px; width: auto;">
+        </a>
+      </div>
+
+      <!-- Pulsante Hamburger Mobile (Toggle nativo) -->
+      <button class="agid-menu-toggler d-lg-none border-0 bg-transparent text-white p-2" type="button" onclick="document.getElementById('agidHeaderNav').classList.toggle('show');" aria-label="Toggle navigation">
+        <svg class="icon icon-white" style="width: 28px; height: 28px;">
+          <use xlink:href="{{ site.baseurl }}/assets/bootstrap-italia/svg/sprite.svg#it-burger"></use>
+        </svg>
+      </button>
+
+      <!-- Navigazione Responsiva -->
+      <nav id="agidHeaderNav" class="agid-nav-container d-lg-flex align-items-center" aria-label="{{ site.data.t.main-nav[page.lang] }}">
+        <ul class="agid-single-line-nav">
+          {% for menu_page in all_menu_pages %}
+            {% unless menu_page.url == '/it/' or menu_page.title == 'Home' %}
+              <li class="nav-item">
+                <a class="nav-link" aria-label="{{ site.data.t.goto[page.lang]}} {{ menu_page.title }}" href="{{ site.baseurl }}{{ menu_page.url }}">
+                  <span>{{ menu_page.title }}</span>
                 </a>
-              </div>
-              {% endcomment %}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="it-header-navbar-wrapper  theme-light-desk">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <nav class="navbar navbar-expand-lg has-megamenu" aria-label="{{ site.data.t.main-nav[page.lang] }}">
-            <button class="custom-navbar-toggler" type="button" aria-controls="nav10" aria-expanded="false"
-              aria-label="{{ site.data.t.toggle-nav[page.lang] }}" data-target="#nav10">
-              <svg class="icon">
-                <use xlink:href="{{ site.baseurl }}/assets/bootstrap-italia/svg/sprite.svg#it-burger"></use>
-              </svg>
-            </button>
-            <div class="navbar-collapsable" id="nav10">
-              <div class="overlay"></div>
-              <div class="close-div sr-only">
-                <button class="btn close-menu" type="button"><span class="it-close"></span>close</button>
-              </div>
-              <div class="menu-wrapper">
-                <ul class="navbar-nav">
-                  {% for menu_page in current_lang_menu_pages %}
+              </li>
+            {% endunless %}
+          {% endfor %}
+        </ul>
+      </nav>
 
-                  {% comment %}
-                  Le pagine che vengono incluse in questo sottomenù sono un sottoinsieme di tutte le pagine del sito
-                  che:
-                  - hanno la stessa lingua della pagina corrente
-                  - hanno l'attributo "order" valorizzato
-                  - hanno l'attributo "child_of_ref" uguale a `menu_page.ref` attuale (sono quindi figlie di
-                  `menu_page`)
-                  {% endcomment %}
-                  {% assign current_lang_menu_child_pages = site.pages | where: "lang", page.lang | where_exp: "page", "page.order != nil" | where: "child_of_ref", menu_page.ref | sort: "order"%}
-                  {% if current_lang_menu_child_pages.size == 0 %}
-                  <li class="nav-item">
-                    <a class="nav-link" aria-label="{{ site.data.t.goto[page.lang]}} {{ menu_page.title }}" href="{{ site.baseurl }}{{ menu_page.url }}"><span>{{menu_page.title}}</span></a>
-                  </li>
-                  {% else %}
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" aria-label="{{ menu_page.title }} {{ site.data.t.selection[page.lang] }}" href="#" data-toggle="dropdown" aria-expanded="false">
-                      <span>{{ menu_page.title }}</span>
-                      <svg class="icon icon-xs">
-                        <use xlink:href="{{ site.baseurl }}/assets/bootstrap-italia/svg/sprite.svg#it-expand">
-                        </use>
-                      </svg>
-                    </a>
-                    <div class="dropdown-menu">
-                      <div class="link-list-wrapper">
-                        <ul class="link-list">
-                          <li><a class="list-item" aria-label="{{ site.data.t.goto[page.lang] }} {{ menu_page.title }}" href="{{ site.baseurl }}{{ menu_page.url }}"><span>{{ menu_page.title }}</span></a></li>
-                          <li><span class="divider"></span></li>
-                          {% for menu_child_page in current_lang_menu_child_pages %}
-                          <li><a class="list-item" aria-label="{{ site.data.t.goto[page.lang] }} {{ menu_child_page.title }}" href="{{ site.baseurl }}{{ menu_child_page.url }}"><span>{{ menu_child_page.title }}</span></a>
-                          </li>
-                          {% endfor %}
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  {% endif %}
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </div>
     </div>
   </div>
 </div>
