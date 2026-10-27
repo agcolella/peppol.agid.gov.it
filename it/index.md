@@ -43,6 +43,8 @@ dell’operatore economico destinatario (Corner 3).
 
 {% assign about_peppol = site.pages | where: "ref", "cos-e-peppol" | where: "lang", page.lang | first %}
 
+<div style="background-color: #002b55 !important;" class="text-white py-4">
+
 {% include hero.html
     title_first_card=hero_title_first_card
     text_first_card=hero_text_first_card
