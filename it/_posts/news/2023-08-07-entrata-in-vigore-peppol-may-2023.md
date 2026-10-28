@@ -3,6 +3,7 @@ layout: post
 title: Entrata in vigore della Peppol May Release 2023
 lang: it
 ref: entrata-in-vigore-peppol-may-2023
+image: /assets/images/news/2023-08-07-entrata-in-vigore-peppol-may-2023.jpg
 excerpt_separator: <!--more-->
 tags:
 categories: news

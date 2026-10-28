@@ -14,11 +14,39 @@
   {%- include skiplinks.html -%}
   {%- include header/header.html -%}
   <div id="main">{{ content }}</div>
+
+  <!-- PULSANTE TORNA IN CIMA (Back to top) -->
+  <a href="#" id="backToTopBtn" class="back-to-top-btn" aria-label="Torna in cima" title="Torna in cima">
+    <svg class="icon icon-white">
+      <use xlink:href="{{ site.baseurl }}/assets/bootstrap-italia/svg/sprite.svg#it-arrow-up"></use>
+    </svg>
+  </a>
+
   {%- include footer/footer.html -%}
-  {% comment %}
-  {%- include cookiebar.html -%}
-  {% endcomment %}
   {%- include scripts.html -%}
+
+  <!-- SCRIPT COMPARTIMENTO TORNA SU -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var backToTopBtn = document.getElementById("backToTopBtn");
+      
+      window.addEventListener("scroll", function() {
+        if (window.pageYOffset > 300) {
+          backToTopBtn.classList.add("show");
+        } else {
+          backToTopBtn.classList.remove("show");
+        }
+      });
+
+      backToTopBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

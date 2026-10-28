@@ -3,6 +3,7 @@ layout: post
 title: Calendario manutenzioni programmate per il secondo semestre dell'anno 2026
 lang: it
 ref: calendario-manutenzione-2026
+image: /assets/images/news/2026-04-22-calendario-manutenzione-2026.jpg
 excerpt_separator: <!--more-->
 tags:
 categories: news

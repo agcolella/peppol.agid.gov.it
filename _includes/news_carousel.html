@@ -25,7 +25,7 @@
   position: relative;
 }
 
-/* Overlay scuro per garantire la leggibilità del testo sopra le immagini */
+/* Overlay sfumato ad alto contrasto per la massima leggibilità del testo */
 .carousel-single-news .carousel-item::before {
   content: "";
   position: absolute;
@@ -33,7 +33,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.55);
+  /* Sfumatura da scuro leggero a sinistra a blu/nero intenso a destra dove c'è il testo */
+  background: linear-gradient(
+    90deg, 
+    rgba(0, 20, 40, 0.35) 0%, 
+    rgba(0, 28, 56, 0.70) 50%, 
+    rgba(0, 15, 30, 0.90) 100%
+  );
+  z-index: 1;
 }
 
 /* Font size personalizzati */

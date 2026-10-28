@@ -390,3 +390,46 @@ body.page-internal #main {
 body.homepage #main {
   padding-top: 0;
 }
+/* ==========================================================================
+   Pulsante Fluttuante "Torna in Cima" (Back to Top)
+   ========================================================================== */
+
+.back-to-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  background-color: #002b55; /* Blu AgID */
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    fill: #ffffff;
+  }
+
+  &:hover {
+    background-color: #004080;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+    transform: translateY(-3px);
+  }
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
