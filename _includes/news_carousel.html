@@ -25,7 +25,7 @@
   position: relative;
 }
 
-/* Overlay sfumato ad alto contrasto per la massima leggibilità del testo */
+/* Overlay sfumato adattivo per Desktop e Mobile */
 .carousel-single-news .carousel-item::before {
   content: "";
   position: absolute;
@@ -33,14 +33,46 @@
   left: 0;
   right: 0;
   bottom: 0;
-  /* Sfumatura da scuro leggero a sinistra a blu/nero intenso a destra dove c'è il testo */
-  background: linear-gradient(
-    90deg, 
-    rgba(0, 20, 40, 0.35) 0%, 
-    rgba(0, 28, 56, 0.70) 50%, 
-    rgba(0, 15, 30, 0.90) 100%
-  );
   z-index: 1;
+  /* Sfumatura verticale per Schermi Piccoli / Mobile (dall'alto verso il basso) */
+  background: linear-gradient(
+    180deg, 
+    rgba(0, 20, 40, 0.40) 0%, 
+    rgba(0, 20, 40, 0.85) 100%
+  );
+}
+
+/* Sfumatura orizzontale per Desktop (>= 992px) */
+@media (min-width: 992px) {
+  .carousel-single-news .carousel-item::before {
+    background: linear-gradient(
+      90deg, 
+      rgba(0, 20, 40, 0.35) 0%, 
+      rgba(0, 28, 56, 0.70) 50%, 
+      rgba(0, 15, 30, 0.90) 100%
+    );
+  }
+}
+
+/* Ottimizzazione del testo e delle proporzioni per Mobile */
+@media (max-width: 991.98px) {
+  .carousel-single-news .carousel-item {
+    height: 420px; /* Riduzione leggermente dell'altezza su mobile */
+  }
+
+  .carousel-news-title {
+    font-size: 22px !important; /* Font leggermente più ridotto per non occupare tutto lo schermo */
+    line-height: 1.25;
+  }
+
+  .carousel-news-subtitle {
+    font-size: 13px !important;
+    line-height: 1.4;
+  }
+
+  .animated-text {
+    text-align: left !important; /* Allineamento a sinistra su mobile per una lettura più naturale */
+  }
 }
 
 /* Font size personalizzati */
