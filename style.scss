@@ -210,7 +210,7 @@ article h1.title {
   display: none !important;
 }
 /* ==========================================================================
-   Header Overlay e Regolazione Larghezza Menu Monoriga
+   Header Overlay e Menu Multilivello AgID
    ========================================================================== */
 
 .agid-header-overlay {
@@ -219,61 +219,84 @@ article h1.title {
   left: 0;
   width: 100%;
   z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.3);
-  transition: background-color 0.35s ease-in-out, box-shadow 0.35s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: background-color 0.35s ease-in-out;
 
   &:hover,
   &:focus-within {
     background-color: #002b55 !important;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
   }
 }
 
-.agid-nav-container {
-  overflow-x: auto;
-  scrollbar-width: none; /* Nasconde scrollbar su Firefox */
-  &::-webkit-scrollbar {
-    display: none; /* Nasconde scrollbar su Chrome/Safari */
-  }
-}
-
-.agid-single-line-nav {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: center;
-  justify-content: flex-end;
-  white-space: nowrap;
+.agid-multilevel-nav {
+  display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
 
   .nav-item {
-    margin: 0 1px;
+    position: relative;
+    margin: 0 2px;
 
     .nav-link {
       color: #ffffff !important;
       font-weight: 600;
-      font-size: 13px !important; /* Font leggermente più compatto per far rientrare tutte le voci */
-      padding: 6px 10px !important; /* Padding ridotto */
+      font-size: 14px;
+      padding: 8px 12px !important;
       border-radius: 4px;
-      transition: background-color 0.2s ease;
-
-      @media (min-width: 1200px) {
-        font-size: 14px !important;
-        padding: 8px 12px !important;
-      }
+      display: flex;
+      align-items: center;
 
       &:hover {
         background-color: rgba(255, 255, 255, 0.2);
-        color: #ffffff !important;
         text-decoration: none;
       }
     }
-  }
 
-  .dropdown-menu {
-    display: none !important;
+    /* Mostra il dropdown al passaggio del mouse su Desktop */
+    @media (min-width: 992px) {
+      &:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+      }
+    }
+
+    /* Stile della tendina dropdown */
+    .dropdown-menu {
+      background-color: #002b55;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 0 0 6px 6px;
+      padding: 6px 0;
+      min-width: 200px;
+
+      .dropdown-item {
+        color: #ffffff !important;
+        font-size: 14px;
+        padding: 8px 16px;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.15);
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+/* Adattamento Mobile (< 992px) */
+@media (max-width: 991.98px) {
+  .agid-multilevel-nav {
+    flex-direction: column;
+    width: 100%;
+
+    .dropdown-menu {
+      position: static !important;
+      float: none;
+      background-color: rgba(0, 0, 0, 0.2) !important;
+      box-shadow: none !important;
+      padding-left: 15px;
+    }
   }
 }
 /* ==========================================================================
@@ -432,4 +455,16 @@ body.homepage #main {
     visibility: visible;
     transform: translateY(0);
   }
+}
+/* ==========================================================================
+   Rimozione del freccione / rombo bianco dai sottomenu Dropdown
+   ========================================================================== */
+
+.dropdown-menu::before,
+.dropdown-menu::after,
+.agid-multilevel-nav .dropdown-menu::before,
+.agid-multilevel-nav .dropdown-menu::after {
+  display: none !important;
+  content: none !important;
+  border: none !important;
 }

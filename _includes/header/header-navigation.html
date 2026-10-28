@@ -1,4 +1,7 @@
-{% assign all_menu_pages = site.pages | where: "lang", page.lang | where_exp: "page", "page.order != nil" | sort: "order" %}
+{% comment %}
+Recupera le pagine di primo livello (con attributo order e senza child_of_ref) escludendo la Home.
+{% endcomment %}
+{% assign top_menu_pages = site.pages | where: "lang", page.lang | where_exp: "page", "page.order != nil" | where_exp: "page", "page.child_of_ref == nil" | where_exp: "page", "page.ref != 'homepage'" | sort: "order" %}
 
 <div class="agid-header-overlay py-2">
   <div class="container-fluid px-3 px-lg-4">
@@ -11,24 +14,44 @@
         </a>
       </div>
 
-      <!-- Pulsante Hamburger Mobile (Toggle nativo) -->
+      <!-- Pulsante Hamburger Mobile -->
       <button class="agid-menu-toggler d-lg-none border-0 bg-transparent text-white p-2" type="button" onclick="document.getElementById('agidHeaderNav').classList.toggle('show');" aria-label="Toggle navigation">
         <svg class="icon icon-white" style="width: 28px; height: 28px;">
           <use xlink:href="{{ site.baseurl }}/assets/bootstrap-italia/svg/sprite.svg#it-burger"></use>
         </svg>
       </button>
 
-      <!-- Navigazione Responsiva -->
+      <!-- Navigazione Multilivello -->
       <nav id="agidHeaderNav" class="agid-nav-container d-lg-flex align-items-center" aria-label="{{ site.data.t.main-nav[page.lang] }}">
-        <ul class="agid-single-line-nav">
-          {% for menu_page in all_menu_pages %}
-            {% unless menu_page.url == '/it/' or menu_page.title == 'Home' %}
+        <ul class="agid-multilevel-nav">
+          {% for menu_page in top_menu_pages %}
+            {% assign child_pages = site.pages | where: "lang", page.lang | where_exp: "page", "page.order != nil" | where: "child_of_ref", menu_page.ref | sort: "order" %}
+
+            {% if child_pages.size == 0 %}
+              <!-- Voce Senza Sottomenu -->
               <li class="nav-item">
-                <a class="nav-link" aria-label="{{ site.data.t.goto[page.lang]}} {{ menu_page.title }}" href="{{ site.baseurl }}{{ menu_page.url }}">
+                <a class="nav-link" href="{{ site.baseurl }}{{ menu_page.url }}">
                   <span>{{ menu_page.title }}</span>
                 </a>
               </li>
-            {% endunless %}
+            {% else %}
+              <!-- Voce Con Sottomenu (Multilivello) -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="{{ site.baseurl }}{{ menu_page.url }}" id="dropdown-{{ menu_page.ref }}">
+                  <span>{{ menu_page.title }}</span>
+                  <svg class="icon icon-xs icon-white ml-1">
+                    <use xlink:href="{{ site.baseurl }}/assets/bootstrap-italia/svg/sprite.svg#it-expand"></use>
+                  </svg>
+                </a>
+                <div class="dropdown-menu shadow-lg" aria-labelledby="dropdown-{{ menu_page.ref }}">
+                  <a class="dropdown-item font-weight-bold border-bottom" href="{{ site.baseurl }}{{ menu_page.url }}">{{ menu_page.title }}</a>
+                  {% for child in child_pages %}
+                    <a class="dropdown-item" href="{{ site.baseurl }}{{ child.url }}">{{ child.title }}</a>
+                  {% endfor %}
+                </div>
+              </li>
+              
+            {% endif %}
           {% endfor %}
         </ul>
       </nav>
